@@ -9,8 +9,12 @@ def gerar_id():
     return f"AP-{codigo}"
 
 
-def gerar_numeros():
-    return sorted(random.sample(range(1, 61), 6))
+def gerar_numeros(quantidade=6):
+    return sorted(random.sample(range(1, 61), quantidade))
+
+
+def validar_aposta(numeros):
+    return 6 <= len(numeros) <= 15
 
 
 def gerar_csv(nome_arquivo="apostas.csv", quantidade_linhas=10):
@@ -19,9 +23,12 @@ def gerar_csv(nome_arquivo="apostas.csv", quantidade_linhas=10):
 
         for _ in range(quantidade_linhas):
             identificador = gerar_id()
-            numeros = gerar_numeros()
 
-            escritor.writerow([identificador] + numeros)
+            quantidade_numeros = random.randint(1, 15)
+            numeros = gerar_numeros(quantidade_numeros)
+
+            if validar_aposta(numeros):
+                escritor.writerow([identificador] + numeros)
 
 
 if __name__ == "__main__":
