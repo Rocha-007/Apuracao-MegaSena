@@ -1,0 +1,29 @@
+name: CI Apuracao Mega-Sena
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verificar versao do Python
+        run: python --version
+
+      - name: Verificar sintaxe do gerador
+        run: python -m py_compile gerador.py
+
+      - name: Executar gerador
+        run: python gerador.py 10
